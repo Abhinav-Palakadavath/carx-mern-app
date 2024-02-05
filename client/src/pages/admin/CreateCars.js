@@ -1,7 +1,35 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '../../components/layout/Layout'
 import AdminMenu from '../../components/layout/AdminMenu'
+import axios from 'axios'
+import { Select } from 'antd'
+
+const { Option } = Select
+
 const CreateCars = () => {
+    const [categories, setCategories] = useState([])
+    const [photo, setPhoto] = useState([])
+    const [name, setName] = useState([])
+    const [category, setCategory] = useState([])
+    const [description, setDescription] = useState([])
+    const [price, setPrice] = useState([])
+
+    //get all categories
+    const getAllCategory = async () => {
+        try {
+            const { data } = await axios.get('/api/v1/category/get-category')
+            if (data?.success) {
+                setCategories(data?.category);
+            }
+        } catch (error) {
+            console.log(error)
+            alert("something went wrong in getting category")
+        }
+    }
+    useEffect(() => {
+        getAllCategory();
+
+    }, []);
     return (
         <Layout>
             <div className='container-fluid m-3 p-3'>
@@ -11,6 +39,17 @@ const CreateCars = () => {
                     </div>
                     <div className='col-md-9'>
                         <h1>Create Cars</h1>
+                        <div className='m-1 w-75'>
+                            <Select variant={false}
+                                placeholder="Select a category" size='large' showSearch
+                                className='form-select mb-3' onChange={(value) => { setCategory(value) }}>
+                                {categories?.map(c => (
+                                    <Option key={c._id} value={c.name}>
+                                        {c.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </div>
                     </div>
                 </div>
             </div>
