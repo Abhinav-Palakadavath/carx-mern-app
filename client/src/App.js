@@ -14,6 +14,8 @@ import CreateCategory from "./pages/admin/CreateCategory";
 import CreateCars from "./pages/admin/CreateCars";
 import Users from "./pages/admin/Users";
 import Profile from "./pages/user/Profile";
+import Cars from "./pages/admin/Cars";
+import UpdateCars from "./pages/admin/UpdateCars";
 function App() {
   return (
     <>
@@ -27,6 +29,8 @@ function App() {
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/create-category" element={<CreateCategory />} />
           <Route path="admin/create-cars" element={<CreateCars />} />
+          <Route path="admin/cars/:slug" element={<UpdateCars />} />
+          <Route path="admin/cars" element={<Cars />} />
           <Route path="admin/users" element={<Users />} />
         </Route>
         <Route path="/register" element={<Register />} />

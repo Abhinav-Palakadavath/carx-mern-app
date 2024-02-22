@@ -1,19 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import Layout from '../../components/layout/Layout'
 import AdminMenu from '../../components/layout/AdminMenu'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Select } from 'antd'
 const { Option } = Select
 
-const CreateCars = () => {
+const UpdateCars = () => {
     const navigate = useNavigate()
+    const params = useParams()
     const [categories, setCategories] = useState([])
     const [photo, setPhoto] = useState("")
     const [name, setName] = useState("")
     const [category, setCategory] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
+    const [id, setId] = useState("")
+
+    //get single product
+    const getSingleCar = async () => {
+        try {
+            const { data } = await axios.get(`/api/v1/cars/single-car/${params.slug}`)
+            setName(data.products.name)
+            setId(data.products._id)
+            setCategory(data.products.category._id)
+            setDescription(data.products.description)
+            setPrice(data.products.price)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        getSingleCar();
+        //eslint-disable-next-line
+    }, [])
 
     //get all categories
     const getAllCategory = async () => {
@@ -31,34 +51,40 @@ const CreateCars = () => {
         getAllCategory();
     }, []);
 
-    //create car function
-    const handleCreate = async (e) => {
+    //update car function
+    const handleUpdate = async (e) => {
         e.preventDefault()
         try {
             const carData = new FormData()
             carData.append("category", category)
-            carData.append("photo", photo)
+            photo && carData.append("photo", photo)
             carData.append("name", name)
             carData.append("description", description)
             carData.append("price", price)
-            const { data } = await axios.post('/api/v1/cars/create-cars', carData)
+            const { data } = await axios.put(`/api/v1/cars/update-cars/${id}`, carData)
             // if (data?.success) {
-            //     alert("Created successfully")
-            //     navigate('/dashboard/admin/cars')
+            //     alert("Updated successfully")
+
             // } else {
             //     alert("Not created")
             // }
             if (data?.success) {
-                alert(data?.message);
-                navigate('/dashboard/admin/cars')
-            } else {
-                alert("Created Successfully");
-                // navigate("/dashboard/admin/cars");
+                alert(data?.message)
+                navigate("/dashboard/admin/cars")
+            }
+            else {
+                alert("Updated succesfully")
+
             }
         } catch (error) {
             console.log(error)
-            alert("Something wrong in creating cars")
+            alert("Something wrong in updating cars")
         }
+    }
+
+    //delete car
+    const handleDelete = () => {
+
     }
     return (
         <Layout>
@@ -68,11 +94,13 @@ const CreateCars = () => {
                         <AdminMenu />
                     </div>
                     <div className='col-md-9 border-start '>
-                        <h1>Create Cars</h1>
+                        <h1>Update Cars</h1>
                         <div className='m-1 w-75'>
                             <Select variant={false}
                                 placeholder="Select a category" size='large' showSearch
-                                className='form-select mb-3' onChange={(value) => { setCategory(value) }}>
+                                className='form-select mb-3' onChange={(value) => { setCategory(value) }}
+                                value={category}
+                            >
                                 {categories?.map(c => (
                                     <Option key={c._id} value={c._id}>
                                         {c.name}
@@ -92,10 +120,19 @@ const CreateCars = () => {
                                 </label>
                             </div>
                             <div className='mb-3'>
-                                {photo && (
+                                {photo ? (
                                     <div className='text-center'>
                                         <img
                                             src={URL.createObjectURL(photo)}
+                                            alt='car'
+                                            height={"200px"}
+                                            className='img img-responsive'
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className='text-center'>
+                                        <img
+                                            src={`/api/v1/cars/car-photo/${id}`}
                                             alt='car'
                                             height={"200px"}
                                             className='img img-responsive'
@@ -122,7 +159,10 @@ const CreateCars = () => {
                                 />
                             </div>
                             <div className='mb-3'>
-                                <button className='btn btn-primary' onClick={handleCreate}>Create Car</button>
+                                <button className='btn btn-success' onClick={handleUpdate}>Update Car</button>
+                            </div>
+                            <div className='mb-3'>
+                                <button className='btn btn-danger' onClick={handleDelete}>Delete Car</button>
                             </div>
                         </div>
                     </div>
@@ -132,4 +172,4 @@ const CreateCars = () => {
     )
 }
 
-export default CreateCars
+export default UpdateCars

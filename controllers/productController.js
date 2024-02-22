@@ -28,7 +28,7 @@ export const createProductController = async (req, res) => {
         await products.save()
         res.status(201).send({
             success: true,
-            message: "Producted Created Succesfully",
+            message: "Car Created Succesfully",
             products
         })
     } catch (error) {
@@ -138,7 +138,8 @@ export const updateProductController = async (req, res) => {
         }
 
         const products = await productModel.findByIdAndUpdate(
-            req.params.id, { ...req.fields, slug: slugify(name) },
+            req.params.id,
+            { ...req.fields, slug: slugify(name) },
             { new: true }
         );
         if (photo) {
