@@ -161,3 +161,69 @@ export const updateProductController = async (req, res) => {
         })
     }
 }
+
+export const carFilterController = async (req, res) => {
+    try {
+        const { checked, radio } = req.body;
+        let args = {};
+        if (checked.length > 0) args.category = checked;
+        if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
+        const products = await productModel.find(args)
+        res.status(200).send({
+            success: true,
+            products
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            success: false,
+            message: "Error in filter",
+            error
+        })
+    }
+}
+
+export const carCountController = async (req, res) => {
+    try {
+        const total = await productModel.find({}).estimatedDocumentCount()
+        res.status(200).send({
+            success: true,
+            total
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            message: "Error in car count",
+            error,
+            success: false
+        })
+    }
+}
+
+export const carListController = async (req, res) => {
+    try {
+        const perPage = 4
+        const Page = req.params.page ? req.params.page : 1
+        const products = await productModel
+            .find({})
+            .select("-photo")
+            .skip((Page - 1) * perPage)
+            .limit(perPage)
+            .sort({ createdAt: -1 });
+        res.status(200).send({
+            success: true,
+            products,
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            success: false,
+            message: "Error",
+            error
+        })
+    }
+}
+
+export const searchCarController = async (req, res) => {
+
+}

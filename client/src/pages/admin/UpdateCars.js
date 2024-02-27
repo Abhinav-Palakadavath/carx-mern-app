@@ -83,8 +83,17 @@ const UpdateCars = () => {
     }
 
     //delete car
-    const handleDelete = () => {
-
+    const handleDelete = async () => {
+        try {
+            let check = window.prompt("Are you sure to delete this product?..")
+            if (!check) return
+            const { data } = await axios.delete(`/api/v1/cars/delete-car/${id}`)
+            alert("Deleted successfully")
+            navigate('/dashboard/admin/cars')
+        } catch (error) {
+            console.log(error)
+            alert("Error in deleting")
+        }
     }
     return (
         <Layout>

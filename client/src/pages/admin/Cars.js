@@ -25,10 +25,10 @@ const Cars = () => {
         <Layout>
             <div className='container-fluid m-3 p-3 w-auto '>
                 <div className='row dashboard'>
-                    <div className='col-md-3'>
+                    <div className='col-md-3 mt-3'>
                         <AdminMenu />
                     </div>
-                    <div className='col-md-9 '>
+                    <div className='col-md-9 mt-3'>
                         <h1 className='text-center'>All Cars</h1>
                         <div className='d-flex flex-container flex-wrap justify-content-grid' id='cars-cards'>
                             {cars?.map((p) => (
@@ -37,7 +37,7 @@ const Cars = () => {
                                     to={`/dashboard/admin/cars/${p.slug}`}
                                     className='car-link'
                                 >
-                                    <div className="card " style={{ width: '18rem' }} key={p._id}>
+                                    <div className="card" id="all-cards" style={{ width: '18rem' }} key={p._id}>
                                         <img src={`/api/v1/cars/car-photo/${p._id}`} className="card-img-top" alt={p.name} />
                                         <div className="card-body">
                                             <h5 className="card-title">{p.name}</h5>
