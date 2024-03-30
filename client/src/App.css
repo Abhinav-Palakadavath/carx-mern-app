@@ -128,3 +128,38 @@
   margin-right: 0;
   margin-top: 0;
 }  */
+
+#button-search {
+  margin-top: 3%;
+  height: min-content;
+  width: min-content;
+}
+
+#wishlist-btn {
+  margin-left: 14em;
+  position: relative;
+  margin-top: 0px;
+  display: inline-block;
+}
+
+.wishlist-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: red;
+}
+
+.wishlist-icon-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  /* Adjust this value to fit your design */
+  left: -2px;
+  /* Adjust this value to fit your design */
+  right: -2px;
+  /* Adjust this value to fit your design */
+  bottom: -2px;
+  /* Adjust this value to fit your design */
+  border: 2px solid red;
+  border-radius: 50%;
+}

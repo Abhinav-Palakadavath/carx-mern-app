@@ -16,6 +16,9 @@ import Users from "./pages/admin/Users";
 import Profile from "./pages/user/Profile";
 import Cars from "./pages/admin/Cars";
 import UpdateCars from "./pages/admin/UpdateCars";
+import Search from "./pages/Search";
+import Categories from "./pages/Categories";
+import CategoryName from "./pages/CategoryName";
 function App() {
   return (
     <>
@@ -38,6 +41,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<Policy />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/category/:slug" element={<CategoryName />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes >
     </>

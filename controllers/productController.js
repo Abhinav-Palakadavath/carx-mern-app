@@ -1,4 +1,5 @@
 import productModel from "../models/productModel.js";
+import categoryModel from "../models/categoryModel.js"
 import fs from 'fs'
 import slugify from 'slugify';
 
@@ -225,5 +226,40 @@ export const carListController = async (req, res) => {
 }
 
 export const searchCarController = async (req, res) => {
+    try {
+        const { keyword } = req.params
+        const result = await productModel.find({
+            $or: [
+                { name: { $regex: keyword, $options: "i" } },
+                { description: { $regex: keyword, $options: "i" } },
+            ]
+        }).select("-photo")
+        res.json(result)
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            success: false,
+            message: "Error in search product",
+            error
+        })
+    }
+}
 
+export const carCategoryController = async (req, res) => {
+    try {
+        const category = await categoryModel.findOne({ slug: req.params.slug })
+        const products = await productModel.find({ category }).populate('category')
+        res.status(200).send({
+            success: true,
+            category,
+            products,
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            success: false,
+            error,
+            message: "Error while getting cars"
+        })
+    }
 }

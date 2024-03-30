@@ -1,6 +1,7 @@
 import express from "express";
 import { isAdmin, requireSignIn } from './../middlewares/authMiddleware.js';
 import {
+    carCategoryController,
     carCountController,
     carFilterController,
     carListController,
@@ -35,5 +36,7 @@ router.get('/car-count', carCountController)
 //car list
 router.get('/car-list/:page', carListController)
 //search car
-router.get('/search', searchCarController)
+router.get('/search/:keyword', searchCarController)
+//category wise cars
+router.get('/car-category/:slug', carCategoryController)
 export default router

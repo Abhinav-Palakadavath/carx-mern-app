@@ -3,6 +3,7 @@ import Layout from '../components/layout/Layout'
 import axios from 'axios'
 import { Checkbox, Radio } from 'antd'
 import { Prices } from '../components/Prices'
+import { FaRegHeart } from 'react-icons/fa'
 
 const Homepage = () => {
   const [cars, setCars] = useState([])
@@ -140,8 +141,10 @@ const Homepage = () => {
               //   className='car-link'
               // >
               <div className="card " style={{ width: '18rem' }} key={p._id}>
+
                 <img src={`/api/v1/cars/car-photo/${p._id}`} className="card-img-top" alt={p.name} />
                 <div className="card-body">
+                  <button className='btn' id='wishlist-btn'><FaRegHeart className='wishlist-icon' /></button>
                   <h4 className="card-title">{p.name}</h4>
                   <h5 className='card-text'>₹ {p.price}</h5>
                   {/* <h6 className='card-text'>{p.category}</h6> */}
@@ -157,7 +160,7 @@ const Homepage = () => {
                 e.preventDefault()
                 setPage(page + 1)
               }}>
-                {loading ? "Loading ..." : "Loade more"}
+                {loading ? "Loading ..." : "Load more"}
               </button>
             )}
           </div>
