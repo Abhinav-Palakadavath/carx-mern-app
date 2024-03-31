@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Layout from './../components/layout/Layout';
 import { useParams } from 'react-router-dom';
+import { FaRegHeart } from 'react-icons/fa'
 import axios from 'axios';
 
 const CategoryName = () => {
@@ -39,6 +40,7 @@ const CategoryName = () => {
                                 <div className="card " style={{ width: '18rem' }} key={p._id}>
                                     <img src={`/api/v1/cars/car-photo/${p._id}`} className="card-img-top" alt={p.name} />
                                     <div className="card-body">
+                                        <button className='btn btn-lg' id='wishlist-btn'><FaRegHeart className='wishlist-icon' /></button>
                                         <h4 className="card-title">{p.name}</h4>
                                         <h5 className='card-text'>₹ {p.price}</h5>
                                         {/* <h6 className='card-text'>{p.category}</h6> */}

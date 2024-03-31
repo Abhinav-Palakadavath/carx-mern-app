@@ -136,10 +136,11 @@
 }
 
 #wishlist-btn {
-  margin-left: 14em;
+  margin-left: 12em;
   position: relative;
   margin-top: 0px;
   display: inline-block;
+  border: none;
 }
 
 .wishlist-icon {
