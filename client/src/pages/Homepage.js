@@ -4,9 +4,11 @@ import axios from 'axios'
 import { Checkbox, Radio } from 'antd'
 import { Prices } from '../components/Prices'
 import { FaRegHeart } from 'react-icons/fa'
+import { useWishlist } from '../context/wishlist'
 
 const Homepage = () => {
   const [cars, setCars] = useState([])
+  const [wishlist, setWishlist] = useWishlist([])
   const [categories, setCategories] = useState([])
   const [checked, setChecked] = useState([])
   const [radio, setRadio] = useState([])
@@ -144,7 +146,15 @@ const Homepage = () => {
 
                 <img src={`/api/v1/cars/car-photo/${p._id}`} className="card-img-top" alt={p.name} />
                 <div className="card-body">
-                  <button className='btn' id='wishlist-btn'><FaRegHeart className='wishlist-icon' /></button>
+                  <button className='btn btn-lg'
+                    id='wishlist-btn'
+
+                  >
+                    <FaRegHeart className='wishlist-icon' onClick={() => {
+                      setWishlist([...wishlist, p])
+                      alert("Wishlisted");
+                    }} />
+                  </button>
                   <h4 className="card-title">{p.name}</h4>
                   <h5 className='card-text'>₹ {p.price}</h5>
                   {/* <h6 className='card-text'>{p.category}</h6> */}

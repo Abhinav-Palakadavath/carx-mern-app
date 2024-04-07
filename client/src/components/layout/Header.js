@@ -5,11 +5,13 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { FaCar } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { useAuth } from '../../context/auth';
+import { useWishlist } from '../../context/wishlist';
 import SearchInput from '../form/SearchInput';
 import useCategory from '../../hooks/useCategory';
 const Header = () => {
   const [auth, setAuth] = useAuth();
-  const categories = useCategory()
+  const categories = useCategory();
+  const [wishlist] = useWishlist();
   const handleLogout = () => {
     setAuth({
       ...auth, user: null,
@@ -85,7 +87,7 @@ const Header = () => {
                 </>)
               }
               <li className="nav-item">
-                <NavLink to="/wishlist " className="nav-link "><FaRegHeart />(0)</NavLink>
+                <NavLink to="/wishlist " className="nav-link "><FaRegHeart />{wishlist?.length}</NavLink>
               </li>
             </ul>
           </div>

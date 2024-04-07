@@ -1,17 +1,17 @@
 import { useState, useContext, createContext } from "react";
 
-const WishListContext = createContext();
-const WishListProvider = ({ children }) => {
-    const [wishList, setWishList] = useState([])
+const WishlistContext = createContext();
+const WishlistProvider = ({ children }) => {
+    const [wishlist, setWishlist] = useState([])
 
     return (
-        <WishListContext.Provider value={[wishList, setWishList]}>
+        <WishlistContext.Provider value={[wishlist, setWishlist]}>
             {children}
-        </WishListContext.Provider>
+        </WishlistContext.Provider>
     );
 };
 
 // custom hook
-const useWishList = () => useContext(WishListContext);
+const useWishlist = () => useContext(WishlistContext);
 
-export { useWishList, WishListProvider };
+export { useWishlist, WishlistProvider };

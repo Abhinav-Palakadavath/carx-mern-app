@@ -19,6 +19,7 @@ import UpdateCars from "./pages/admin/UpdateCars";
 import Search from "./pages/Search";
 import Categories from "./pages/Categories";
 import CategoryName from "./pages/CategoryName";
+import WishListPage from "./pages/WishListPage";
 function App() {
   return (
     <>
@@ -44,6 +45,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/category/:slug" element={<CategoryName />} />
+        <Route path="/wishlist" element={<WishListPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes >
     </>
